@@ -21,7 +21,7 @@ if( $DEBUG ) {
     require_once("lib/modules/Post.php");
 
     // and the main template
-    require_once("views/static/home.php");
+    require_once("view/static/home.php");
     $buffer = ob_get_contents();
     ob_end_clean();
 
