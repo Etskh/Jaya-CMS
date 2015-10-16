@@ -1,0 +1,24 @@
+{
+	"name" : "extern",
+	"version" : 20151014,
+	"children" : {
+		"jQuery" : {
+			"scripts" : ["https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"]
+		},
+		"Bootstrap" : {
+			"stylesheets" : ["https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"]
+		},
+		"JShrink" : {
+			"repo" : "https://github.com/tedious/JShrink.git",
+			"sources" : ["src/JShrink/Minifier.php"]
+		},
+		"lessphp" : {
+			"repo" : "https://github.com/leafo/lessphp.git",
+			"sources" : ["lessc.inc.php"]
+		},
+		"parsedown" : {
+			"repo" : "https://github.com/erusev/parsedown.git",
+			"sources" : ["Parsedown.php"]
+		}
+	}
+}

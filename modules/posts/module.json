@@ -1,0 +1,23 @@
+{
+	"name" : "posts",
+	"version" : 20151014,
+	"dependencies" : [
+		"extern.Bootstrap",
+		"extern.jQuery",
+		"extern.parsedown"
+	],
+	"sources" : [
+		"Post.php",
+		"PostPHP.php",
+		"PostMarkdown.php"
+	],
+	"scripts" : [
+		"client/posts.js"
+	],
+	"stylesheets" : [
+		"client/posts.less"
+	],
+	"views" : {
+		"main" : "views/Posts.php"
+	}
+}
