@@ -1,7 +1,7 @@
 
 // namespace Site
 //
-var Post = (function(document){
+var Site = (function(document){
 
 	// This is the Init area for the site
 	//
@@ -9,12 +9,13 @@ var Post = (function(document){
 		// Init
 		//
 
+
 		//
 		//
 		$('#post-list a').click(function(){
 			$('#header-posts').click();
 		});
-		$('#header-posts').click(function() {
+		/*$('#header-updates').click(function() {
 			// Show the post-list
 			$(this).toggleClass('active');
 			if( $(this).hasClass('active') ) {
@@ -23,7 +24,7 @@ var Post = (function(document){
 			else {
 				$('#post-list').fadeOut(300);
 			}
-		});
+		});*/
 
 
 
@@ -89,13 +90,35 @@ var Post = (function(document){
 				}
 			});
 		});
+
+
+		$('#header .link').click(function(){
+			Site.showTab( this.id.split('-').pop() );
+		});
+
+
+		// Show the main posts
+		//
+		Site.showTab('updates');
 	});
 
 	// This is the Site's API
 	//
 	return {
 
+		showTab : function ( name ) {
+			// Remove all active header links
+			$('.link').removeClass('active');
 
+			// Make name active
+			$('#header-'+name).addClass('active');
+
+			// Hide all other tabs
+			$('.tab').fadeOut(100, function(){
+				// show `name` tab
+				$('#'+name+'-tab').fadeIn(300);
+			});
+		},
 
 	};
 })(document);

@@ -15,7 +15,7 @@ $configs = array(
     "source" => '',
     "request" => array(),
     "debug" => true,
-    "title" => "Binary.Art",
+    "title" => "James.Coder",
 );
 
 

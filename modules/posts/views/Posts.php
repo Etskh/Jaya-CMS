@@ -5,8 +5,8 @@ $tags = Post::GetTagCloud($posts);
 
 
 $headerLinks = array(
-	"posts",
-	"code",
+	"updates",
+	"projects",
 	"about",
 	"tags",
 );
@@ -43,7 +43,7 @@ $headerLinks = array(
 			?>
 		</div>
 
-		<div id="content">
+		<div id="updates-tab" class="tab hidden-tab">
 			<?php
 			if( count($posts) > 0 ) {
 				foreach( $posts as $post ) {
@@ -54,6 +54,22 @@ $headerLinks = array(
 				echo "No posts to show";
 			}
 			?>
+		</div>
+
+		<div id="projects-tab" class="tab hidden-tab">
+			<div class="post">
+				<h1>Projects</h1>
+				<div class="post">
+					<h2>Work Project 1</h2>
+					<p>
+						This is a small blurb about it.
+					</p>
+				</div>
+				<h2>Red On Black</h2>
+				<h2>Work Project 2</h2>
+				<h2>Jaya-CMS</h2>
+				<h2>Work Project 3</h2>
+			</div>
 		</div>
 
 		<div id="scripts">
