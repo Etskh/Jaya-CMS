@@ -1,9 +1,9 @@
-[submodule "lib/extern/parsedown"]
-	path = lib/extern/parsedown
+[submodule "modules/extern/parsedown"]
+	path = modules/extern/parsedown
 	url = https://github.com/erusev/parsedown.git
-[submodule "lib/extern/JShrink"]
-	path = lib/extern/JShrink
+[submodule "modules/extern/JShrink"]
+	path = modules/extern/JShrink
 	url = https://github.com/tedious/JShrink.git
-[submodule "lib/extern/lessphp"]
-	path = lib/extern/lessphp
+[submodule "modules/extern/lessphp"]
+	path = modules/extern/lessphp
 	url = https://github.com/leafo/lessphp.git
