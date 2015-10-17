@@ -1,0 +1,9 @@
+{
+    "name": "james",
+    "dependencies" : [
+        "posts",
+    ],
+    "views" : {
+        "main" : "views/main.php"
+    }
+}
