@@ -19,6 +19,11 @@
 		"parsedown" : {
 			"repo" : "https://github.com/erusev/parsedown.git",
 			"sources" : ["Parsedown.php"]
+		},
+		"CodeMirror" : {
+			"repo" : "https://github.com/codemirror/codemirror.git",
+			"scripts" : ["lib/codemirror.js"],
+			"stylesheets" : ["lib/codemirror.css"]
 		}
 	}
 }

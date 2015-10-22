@@ -2,9 +2,8 @@
 	"name" : "posts",
 	"version" : 20151014,
 	"dependencies" : [
-		"extern.Bootstrap",
-		"extern.jQuery",
-		"extern.parsedown"
+		"extern.parsedown",
+		"extern.jQuery"
 	],
 	"sources" : [
 		"Post.php",
@@ -18,6 +17,7 @@
 		"client/posts.less"
 	],
 	"views" : {
-		"main" : "views/Posts.php"
+		"main" : "views/Posts.php",
+		"posts": "views/AllPosts.php"
 	}
 }

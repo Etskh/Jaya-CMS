@@ -1,23 +1,14 @@
 <?php
-$startTime = microtime(true);
 require_once("modules/core/Bootstrap.php");
 
 
-
-
 //
-// Configuration
+// Application
 //
-$configs = array(
-    "errors" => '',
-    "scripts" => '',
-    "stylesheets" => '',
-    "source" => '',
-    "request" => array(),
+$app = new Application('James Codes', array(
     "debug" => true,
-    "title" => "James.Coder",
-);
-
+));
+$moduleRoot = Module::Root($app);
 
 
 //
@@ -28,10 +19,8 @@ $configs = array(
 //      the keys must be iterated over... or we have an array of regexps
 //
 $views = array(
-    "/" => "posts.main",
+    "/" => "james.main",
 );
-
-
 
 
 
@@ -40,11 +29,10 @@ $views = array(
 //
 // TODO: Get current URL vs $views
 //
-$view = Module::Root()->getViewByPath( $views['/'] );
+$view = $moduleRoot->getViewByPath( $views['/'] );
 
 
 //
 // Output
 //
-$configs['starttime'] = sprintf("%f", $startTime);
-die($view->getHTML($configs));
+die($view->getHTML($app->configs));

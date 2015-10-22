@@ -1,4 +1,4 @@
 
 ## It's Alive!
 
-Now is the time!
+I am the proud owner of the URL [jamescodes.ca](http://www.jamescodes.ca). 

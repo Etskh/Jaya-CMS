@@ -1,5 +1,6 @@
 <?php
 
+
 $headerLinks = array(
 	"posts",
 	//"code",
@@ -44,6 +45,22 @@ $headerLinks = array(
 
 		<div id="content">
 			{{view:"posts.posts"}}
+		</div>
+
+		<div id="projects-tab" class="tab hidden-tab">
+			<div class="post">
+				<h1>Projects</h1>
+				<div class="post">
+					<h2>Work Project 1</h2>
+					<p>
+						This is a small blurb about it.
+					</p>
+				</div>
+				<h2>Red On Black</h2>
+				<h2>Work Project 2</h2>
+				<h2>Jaya-CMS</h2>
+				<h2>Work Project 3</h2>
+			</div>
 		</div>
 
 		<div id="scripts">
