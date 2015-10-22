@@ -1,0 +1,14 @@
+{
+	"name" : "james",
+	"dependencies" : [
+		"extern.Bootstrap",
+		"extern.jQuery",
+		"posts"
+	],
+	"stylesheets" : [
+		"style.less"
+	],
+	"views" : {
+		"main" : "views/main.php"
+	}
+}
