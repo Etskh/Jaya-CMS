@@ -13,25 +13,15 @@ if (!defined ("INC_PATH")) {
 	define("INC_PATH", $dir);
 	set_include_path(get_include_path() . PATH_SEPARATOR . $dir);
 
-	if (defined("DEVEL_ENV")) {
-		error_reporting(E_ALL);
-	}
-	else {
-		error_reporting(E_ALL ^ E_NOTICE);
-	}
+	error_reporting(E_ALL);
 }
 
 
 date_default_timezone_set('America/Vancouver');
 
 
-
+require_once("Application.php");
 require_once("Util.php");
 require_once("Module.php");
 require_once("CachedFile.php");
 require_once("View.php");
-
-//
-// Load all the modules in!
-//
-Module::LoadAllModules();

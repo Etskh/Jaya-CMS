@@ -6,38 +6,60 @@
 //
 class View extends CachedFile
 {
-    public function View ($name, $path) {
-        parent::__construct($path, false );
+    /// The name of the view object
+    public $name;
+
+    /// A list of the cached styles needed by this view
+    public $cachedStyles;
+
+    /// A list of the cached scripts needed by this view
+    public $cacehdScripts;
+
+    /// Constructor!
+    public function View ($name, $path, $module ) {
+        parent::__construct($path, false, $module );
 
         $this->name = $name;
+        $this->cachedStyles = array();
+        $this->cachedScripts = array();
     }
 
+
+    /// Returns the HTML to the view with the given configs
     public function getHTML( $configs ) {
 
         $DEBUG = isset($configs['debug']) && $configs['debug'];
 
         // These are all of teh cached styles
         //
-        $cachedStyles = array();
         $styles = $this->ownerModule->getAllStylesheets();
         foreach( $styles as $style ) {
             if( ! Util::IsExtern($style)) {
-                $cachedStyles[] = new CachedFile($style, true);
-                $style = end($cachedStyles)->getCacheFilePath();
+                $this->cachedStyles[] = new CachedFile($style, true, $this->ownerModule );
+                $style = end($this->cachedStyles)->getCacheFilePath();
             }
-            $configs['stylesheets'] .= '<link rel="stylesheet" type="text/css" href="'.$style.'" />';
+
+            // Throw the script tag in if it hasn't been already
+            $styleString = '<link rel="stylesheet" type="text/css" href="'.$style.'" />';
+            if( strpos( $configs['stylesheets'], $styleString) === false ) {
+                $configs['stylesheets'] .= $styleString;
+            }
         }
 
         // These are all the cached scripts
         //
-        $cachedScripts = array();
         $scripts = $this->ownerModule->getAllScripts();
         foreach( $scripts as $script ) {
             if( ! Util::IsExtern($script)) {
-                $cachedScripts[] = new CachedFile($script, true);
-                $script = end($cachedScripts)->getCacheFilePath();
+                $this->cachedScripts[] = new CachedFile($script, true, $this->ownerModule );
+                $script = end($this->cachedScripts)->getCacheFilePath();
             }
-            $configs['scripts'] .= '<script src="'.$script.'"></script>';
+
+            // Throw the script tag in if it hasn't been already
+            $scriptString = '<script src="'.$script.'"></script>';
+            if( strpos( $configs['scripts'], $scriptString) === false ) {
+                $configs['scripts'] .= $scriptString;
+            }
         }
 
 
@@ -52,6 +74,7 @@ class View extends CachedFile
             $request = $configs['request'];
 
             // and the main template
+            ob_start();
             require_once( $this->ownerModule->getFullDirPath() . $this->path );
             $buffer = ob_get_contents();
             ob_end_clean();
@@ -62,10 +85,10 @@ class View extends CachedFile
             }
 
             /// Compile/save (re-cache) scripts and styles
-            foreach($cachedStyles as $cachedStyle ) {
+            foreach($this->cachedStyles as $cachedStyle ) {
                 $cachedStyle->compileAndSave();
             }
-            foreach($cachedScripts as $cachedScript ) {
+            foreach($this->cachedScripts as $cachedScript ) {
                 $cachedScript->compileAndSave();
             }
 
@@ -77,12 +100,41 @@ class View extends CachedFile
         }
 
 
+        //
+        // Look for embedded views:
+        //
+        while( preg_match('/{{view:\"(?P<view>[\w\.]+)\"}}/', $buffer, $matches) ) {
+            if( isset($matches['view']) ) {
+                $subview = Module::Root()->getViewByPath($matches['view']);
+                $subHTML = $subview->getHTML($configs);
+                $buffer = str_replace( '{{view:"'.$matches['view'].'"}}', $subHTML, $buffer);
+            }
+        }
+
+
+        //
+        // Now fill the views with the configs
+        //
         $configs['loadtime'] = sprintf("%.4f", microtime(true) - floatval($configs['starttime']));
+        $configs['request'] = false;
         foreach( $configs as $config => $value ) {
             $buffer = str_replace( "{{config.".$config."}}", $value, $buffer);
         }
         return $buffer;
     }
 
-    public $name;
+    /// Returns an array of strings of paths to the cached, minified, and concatenated javascript files
+    // eg: array(
+    //      "module-post-MainView.min.js",
+    //      "core.min.js"
+    //  )
+    //
+    public function getMinifiedJSFiles() {
+        $buffer = '';
+        foreach( $this->$cacehdScripts as $script ) {
+            $buffer .= $script->minify();
+        }
+        return $buffer;
+    }
+
 }
