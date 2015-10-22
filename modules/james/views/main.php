@@ -2,9 +2,9 @@
 
 $headerLinks = array(
 	"posts",
-	"code",
-	"about",
-	"tags",
+	//"code",
+	//"about",
+	//"tags",
 );
 
 ?><!DOCTYPE html>
