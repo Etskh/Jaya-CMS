@@ -2,8 +2,8 @@
 
 
 $headerLinks = array(
-	"posts",
-	//"code",
+	"updates",
+	"projects",
 	//"about",
 	//"tags",
 );
@@ -12,6 +12,15 @@ $headerLinks = array(
 <html>
 	<head>
 		<title>{{config.title}}</title>
+		<meta charset="utf8"/>
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+		<meta name="description" content="">
+		<meta name="keywords" content="James Loucks">
+
+		<link rel="icon" href="modules/james/skull.ico" />
+		<link rel="shortcut icon" href="modules/james/skull.png" />
+		<link rel="apple-touch-icon" href="modules/james/skull.png" />
+
 		{{config.stylesheets}}
 	</head>
 	<body>
@@ -24,51 +33,14 @@ $headerLinks = array(
 			?>
 		</div>
 
-		<?php /*
-		<div id="post-list">
-			<ul><?php
-			foreach( $posts as $post ) {
-				?><li><a href="#<?=$post->slug?>"><?=$post->name?></a></li><?php
-			}
-			?></ul>
-		</div>
-
-		<div id="tag-cloud">
-			<?php
-			foreach( $tags as $tag => $count ) {
-				?><a><?=$tag?>(<?=$count?>)</a><?php
-			}
-			?>
-		</div>
-
-		*/ ?>
-
 		<div id="content">
-			{{view:"posts.posts"}}
-		</div>
-
-		<div id="projects-tab" class="tab hidden-tab">
-			<div class="post">
-				<h1>Projects</h1>
-				<div class="post">
-					<h2>Work Project 1</h2>
-					<p>
-						This is a small blurb about it.
-					</p>
-				</div>
-				<h2>Red On Black</h2>
-				<h2>Work Project 2</h2>
-				<h2>Jaya-CMS</h2>
-				<h2>Work Project 3</h2>
+			<div id="updates-tab tab hidden-tab">
+				{{view:"posts.posts"}}
 			</div>
 		</div>
 
 		<div id="scripts">
 			{{config.scripts}}
-		</div>
-		<div id="footer">
-			<code>{{config.source}} in {{config.loadtime}} seconds</code>
-			<p>{{config.errors}}</p>
 		</div>
 	</body>
 </html>

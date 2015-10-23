@@ -8,6 +8,9 @@
 	"stylesheets" : [
 		"style.less"
 	],
+	"public" : [
+		"skull.ico"
+	],
 	"views" : {
 		"main" : "views/main.php"
 	}
