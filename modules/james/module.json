@@ -5,6 +5,9 @@
 		"extern.jQuery",
 		"posts"
 	],
+	"scripts" : [
+		"jamescodes.js"
+	],
 	"stylesheets" : [
 		"style.less"
 	],
