@@ -1,19 +1,11 @@
 
-@bgcolor: #181818;
-
+@bgcolor: #FFFFFF;
 @headerColour: #FF9933;
 @headerHeight: 40px;
 
-
-/*
 body {
-	background-color:@bgcolor;
-	color:#E8E8E8;
-	text-shadow:#000 0px 0px 3px;
-	font-family: 'Arial Narrow';
-	position:relative;
+	background-color: darken(@bgcolor,10%);
 }
-*/
 
 
 #header {
@@ -53,8 +45,24 @@ body {
 }
 
 
+
+.post {
+	background-color:#FFF;
+}
+
+#content {
+	margin: auto auto;
+
+	@media screen and (min-width: 800px) {
+		width: 640px;
+	}
+	@media screen and (max-width: 800px) {
+		width: 80%;
+	}
+}
+
 .tab {
-	width: 640px;
+	/*width: 640px;*/
 	margin: auto auto;
 	margin-top: @headerHeight;
 }
@@ -65,9 +73,11 @@ body {
 
 
 #footer {
+	padding-top: 20px;
+	background-color: @bgcolor;
 	clear:both;
 	width:100%;
-	color:#CCC;
+	color:#333;
 	font-size:90%;
 	font-family:monospace;
 	text-align:center;

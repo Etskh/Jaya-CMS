@@ -41,6 +41,15 @@ $headerLinks = array(
 			</div>
 		</div>
 
+		<div id="footer">
+			<p>
+				This site is created with <a href="https://www.github.com/etskh/jaya-cms" target="_blank">Jaya-CMS</a> (which I am the author)
+			</p>
+			<p>
+				{{config.source}} in {{config.loadtime}} seconds
+			</p>
+		</div>
+
 		<div id="scripts">
 			{{config.scripts}}
 		</div>
