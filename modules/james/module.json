@@ -9,7 +9,8 @@
 		"style.less"
 	],
 	"public" : [
-		"skull.ico"
+		"skull2.ico",
+		"skull2.png"
 	],
 	"views" : {
 		"main" : "views/main.php"
