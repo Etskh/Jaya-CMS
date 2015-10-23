@@ -3,6 +3,7 @@
 
 class Post
 {
+	// Where to find this data
 	static public $POST_PATH = "data/posts";
 
 	public $timestamp;
@@ -17,9 +18,9 @@ class Post
 		$this->timestamp = filemtime(Post::$POST_PATH.DIRECTORY_SEPARATOR.$this->filename);
 	}
 
-	public function outputHeader() {
+	public function outputHeader( $extraClass ) {
 		?>
-		<div class="post">
+		<div class="post <?=$extraClass?>">
 			<a name="<?=$this->slug?>"></a>
 			<h1><?=$this->name?></h1>
 			<div class="date-modified"><?=date("F Y", $this->timestamp)?></div><?php
@@ -28,8 +29,8 @@ class Post
 		?></div><?php
 	}
 
-	public function output( $request ) {
-		$this->outputHeader();
+	public function output( $request, $extraClass ) {
+		$this->outputHeader($extraClass);
 		$this->outputContent($request);
 		$this->outputFooter();
 	}

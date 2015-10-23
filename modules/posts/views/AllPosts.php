@@ -3,8 +3,8 @@
 $posts = Post::GetAll();
 
 if( count($posts) > 0 ) {
-	foreach( $posts as $post ) {
-		$post->output( $request );
+	foreach( $posts as $row => $post ) {
+		$post->output( $request, $row%2==0?"even":"odd" );
 	}
 }
 else {

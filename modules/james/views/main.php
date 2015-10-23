@@ -17,15 +17,17 @@ $headerLinks = array(
 		<meta name="description" content="">
 		<meta name="keywords" content="James Loucks">
 
-		<link rel="icon" href="modules/james/skull.ico" />
-		<link rel="shortcut icon" href="modules/james/skull.png" />
-		<link rel="apple-touch-icon" href="modules/james/skull.png" />
+		<link rel="icon" href="modules/james/skull2.ico" />
+		<link rel="shortcut icon" href="modules/james/skull2.png" />
+		<link rel="apple-touch-icon" href="modules/james/skull2.png" />
 
 		{{config.stylesheets}}
 	</head>
 	<body>
 		<div id="header">
-			<a href="#" id="brand">{{config.title}}</a>
+			<a href="#" id="brand">
+				<span>{{config.title}}</span>
+			</a>
 			<?php
 			foreach( $headerLinks as $link ) {
 				?><a class="link" id="header-<?=$link?>" href="#<?=$link?>"><?=$link?></a><?php

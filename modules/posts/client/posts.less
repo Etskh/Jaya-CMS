@@ -42,13 +42,6 @@
 .post {
 	padding:20px;
 
-	h1 {
-		//margin-bottom:0px;
-	}
-	h2 {
-		//margin:0px;
-	}
-
 	.date-modified {
 		float:right;
 		color:#BBB;
@@ -56,11 +49,20 @@
 	}
 
 	.tags {
-		display:none;
+		display:block;
 		color:#CCC;
 		font-size:80%;
 		&:before {
 			content:"Tags: ";
 		}
+	}
+
+	&:after {
+		margin:auto auto;
+		content:" ";
+		display:block;
+		width:100px;
+		height:3px;
+		background-color:#D17519;
 	}
 }
