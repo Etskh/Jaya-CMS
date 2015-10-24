@@ -52,7 +52,7 @@ class View extends CachedFile
         foreach( $scripts as $script ) {
             if( ! Util::IsExtern($script)) {
                 $this->cachedScripts[] = new CachedFile($script, true, $this->ownerModule );
-                $script = end($this->cachedScripts)->getCacheFilePath();
+                $script = 'http://' . $configs['hostname'] .'/'. end($this->cachedScripts)->getCacheFilePath();
             }
 
             // Throw the script tag in if it hasn't been already

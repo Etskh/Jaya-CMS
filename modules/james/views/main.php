@@ -48,6 +48,16 @@ $headerLinks = array(
 			<p>
 				{{config.source}} in {{config.loadtime}} seconds
 			</p>
+			<p><?php
+				$todos = Util::GetTODOs();
+				foreach( $todos as $todo ) {
+					?><div class="todo">
+						<span class="file"><?=$todo['file']?></span>
+						<span class="line"><?=$todo['line']?></span>
+						<span class="text"><?=$todo['text']?></span>
+					</div><?php
+				}
+			?></p>
 		</div>
 
 		<div id="scripts">
