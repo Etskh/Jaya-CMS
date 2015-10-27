@@ -4,13 +4,14 @@
 /// This represents a grouping of functionality inside the app
 class Module {
 
+
     /// Name of module
     public $name;
 
     /// The application
     public $app;
 
-    ///
+    /// List of modules
     public $dependsOn;
     public $parent;
     public $modules;
@@ -18,9 +19,16 @@ class Module {
     public $sources;
     public $scripts;
     public $stylesheets;
+    public $publicFiles;
 
     public $views;
 
+
+
+
+
+
+    /// Get the root module
     static public function Root( $application=false ) {
         if( Module::$s_rootModule == null ) {
 
@@ -33,6 +41,9 @@ class Module {
         return Module::$s_rootModule;
     }
 
+
+
+    /// Adds the module and all its sources into the current scope
     static public function Requires ( $path ) {
         $module = Module::Root()->getByFullPath($path);
         $dependSources = $module->getAllSources();
@@ -41,8 +52,11 @@ class Module {
         }
     }
 
+
+
+
     /// Constructor!
-    public function Module( $name, $app, $configs=array() ) {
+    public function Module( $name, $app, $configs ) {
         $this->name = $name;
         $this->parent = null;
         $this->modules = array();
@@ -53,47 +67,67 @@ class Module {
         $this->sources = array();
         $this->scripts = array();
         $this->stylesheets = array();
+        $this->publicFiles = array();
 
         $this->views = array();
+
 
         // Adding child modules
         //
         if( isset($configs['children'])) {
-            foreach( $configs['children'] as $submodule ) {
-                $this->addChildModule($submodule);
+            foreach( $configs['children'] as $childName => $submodule ) {
+                if( ! isset($submodule['name']) ) {
+                    $submodule['name'] = $childName;
+                }
+                $this->addChildModule( new Module($childName, $app, $submodule) );
             }
+        }
+
+        // Add views
+        if( isset($configs['views']) ) {
+            foreach( $configs['views']  as $viewName => $viewPath ) {
+                $this->addView( new View( $viewName, $viewPath, $this ));
+            }
+        }
+
+
+        // Add dependencies as strings for parsing later
+        //
+        if( isset($configs['dependencies']) ) {
+            $this->dependsOn = $configs['dependencies'];
         }
 
 
         // Adding files
         //
         if( isset($configs['scripts'])) {
-            foreach( $configs['scripts'] as $script ) {
-                $this->scripts[] = $script;
-            }
+            $this->scripts = $configs['scripts'];
         }
         if( isset($configs['sources'])) {
-            foreach( $configs['sources'] as $source ) {
-                $this->sources[] = $source;
-            }
+            $this->sources = $configs['sources'];
         }
         if( isset($configs['stylesheets'])) {
-            foreach( $configs['stylesheets'] as $style ) {
-                $this->stylesheets[] = $style;
-            }
+            $this->stylesheets = $configs['stylesheets'];
+        }
+        if( isset($configs['public'])) {
+            $this->publicFiles = $configs['public'];
         }
     }
 
-    public function addView ($view ) {
+
+
+    // Add a view object to this module
+    public function addView ( $view ) {
         $this->views[$view->name] = $view;
         $view->ownerModule = $this;
     }
 
+    /// Add a child module to this module
     public function addChildModule( $submodule ) {
         $this->modules[] = $submodule;
         $submodule->parent = $this;
-        //print("Adding ".$submodule->name." to ".$this->name."<br/>" );
     }
+
 
 
     /// Returns the module of full path $arPath : Array
@@ -109,18 +143,21 @@ class Module {
             $moudleString .= ', '.$module->name;
         }
 
-        //debug_print_backtrace();
-
         print("Can't find module of path: <pre>".print_r($arPath,true)."</pre>" );
         print("Possible modules are: [".substr($moduleString,2)."]");
         print("In module `$this->name`");
         die();
     }
 
+
+
+
     /// Returns the module with the full path:
     public function getByFullPath( $path ) {
         return $this->getByFullArrayPath( explode(".",$path) );
     }
+
+
 
     /// Gets the full programmy-path modules.core.whatever
     public function getFullPath() {
@@ -131,10 +168,15 @@ class Module {
         return $parentPath . $this->name;
     }
 
+
+
+
     /// Get the full directory path from the web-root
     public function getFullDirPath() {
         return str_replace(".", DIRECTORY_SEPARATOR, $this->getFullPath()).DIRECTORY_SEPARATOR;
     }
+
+
 
     /// Returns an array of all paths to module styles AND dependency styles
     /// it will always return the dependencies first
@@ -153,6 +195,8 @@ class Module {
 
         return $stylesheets;
     }
+
+
 
     // Returns an array of all paths to module scripts AND dependency scripts
     // it will always return the dependencies first
@@ -175,7 +219,9 @@ class Module {
     // Returns an array of all paths to module sources AND dependency sources
     // it will always return the dependencies first
     public function getAllSources () {
+
         $sources = array();
+
         $modulePath = $this->getFullDirPath();
         foreach( $this->sources as $source ) {
             $sources[] =  $modulePath . $source;
@@ -189,8 +235,10 @@ class Module {
     }
 
 
+
+
     public function getViewByPath( $modulePath ) {
-        //die( nl2br( print_r($this->modules, true)));
+
         $explodedPath = explode(".",$modulePath);
         $viewName = array_pop($explodedPath);
         /// TODO: check for $explodedPath count == 0
@@ -201,13 +249,23 @@ class Module {
 
 
 
+
+    public function showAllModules () {
+        foreach($this->modules as $child ) {
+            print( $child->name . "<br/>");
+        }
+    }
+
+
+
+
     /// The root module; use Module::Root($app) to get it.
     static private $s_rootModule = null;
 
-
+    /// Used by the Root object when first called to bootstrap the application
     static private function LoadAllModules( $app ) {
 
-        Module::$s_rootModule = new Module( "modules", $app );
+        Module::$s_rootModule = new Module( "modules", $app, array());
         $files = scandir("modules");
 
         foreach($files as $value){
@@ -239,70 +297,46 @@ class Module {
                         //continue;
                     }
 
-                    Module::$s_rootModule->addChildModule( Module::CreateModuleFromArray($json_a, $app) );
+                    Module::$s_rootModule->addChildModule( new Module( $json_a['name'], $app, $json_a ) );
                 }
 	        }
         }
 
-        Module::ProcessDependencies( Module::$s_rootModule );
+        Module::$s_rootModule->postProcess();
     }
 
 
-    /// Utility function to create a module from an array of data
-    static private function CreateModuleFromArray( $moduleData, $app ) {
+    /// Process dependencies & copy public files if debug mode
+    private function postProcess( ) {
 
-        $module = new Module($moduleData['name'], $app);
-
-        if( isset($moduleData['sources']) ) {
-            $module->sources = $moduleData['sources'];
-        }
-        if( isset($moduleData['stylesheets']) ) {
-            $module->stylesheets = $moduleData['stylesheets'];
-        }
-        if( isset($moduleData['scripts']) ) {
-            $module->scripts = $moduleData['scripts'];
-        }
-
-
-        if( isset($moduleData['dependencies']) ) {
-            foreach($moduleData['dependencies'] as $dependency ) {
-                // TODO: process all dependencies AFTER
-                $module->dependsOn[] = $dependency; //Module::Root()->getByFullPath($dependency);
-            }
-        }
-
-        if( isset($moduleData['views']) ) {
-            foreach($moduleData['views'] as $viewName => $viewPath ) {
-                $module->addView( new View($viewName, $viewPath, $module ));
-            }
-        }
-
-        if( isset($moduleData['children']) ) {
-            foreach( $moduleData['children'] as $childName => $childData ) {
-                $childData['name'] = $childName;
-                $module->addChildModule( Module::CreateModuleFromArray($childData, $app) );
-            }
-        }
-
-        return $module;
-    }
-
-
-    // Process dependencies
-    //
-    static private function ProcessDependencies( $module ) {
-
+        // Create all dependencies
         $dependencyModules = array();
+        foreach( $this->dependsOn as $dependencyString ) {
+            if( is_string( $dependencyString )) {
+                $dependencyModules[] = Module::Root( $this->app )->getByFullPath($dependencyString);
+            }
+            else {
+                $dependencyModules[] = $dependencyString;
+            }
+        }
+        $this->dependsOn = $dependencyModules;
 
-        foreach( $module->dependsOn as $dependencyString ) {
-            $dependencyModules[] = Module::Root( $module->app )->getByFullPath($dependencyString);
+
+        // Move all files marked public to the cached directory under public under the module
+        // Create a cached file for them!
+        if( $this->app->isDebug() ) {
+
+            foreach($this->publicFiles as $publicFile ) {
+                // TODO: move the file to the new location if the old one is older
+            }
+
         }
 
-        foreach( $module->modules as $children ) {
-            Module::ProcessDependencies( $children );
-        }
 
-        $module->dependsOn = $dependencyModules;
+        // Now perform the same for all children
+        foreach( $this->modules as $child ) {
+            $child->postProcess();
+        }
     }
 
 

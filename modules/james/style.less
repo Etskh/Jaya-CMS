@@ -5,6 +5,7 @@
 
 body {
 	background-color: darken(@bgcolor,10%);
+	padding-top:40px;
 }
 
 
@@ -17,6 +18,7 @@ body {
 	height:@headerHeight;
 	position:fixed;
 	width:100%;
+	top:0px;
 
 	a {
 		color:#FFF;
@@ -42,6 +44,39 @@ body {
 			background-color: darken(@headerColour, 20%);
 		}
 	}
+}
+
+
+@todoWidth: 640px;
+
+.todo {
+	width: @todoWidth;
+	overflow: none;
+	text-align:left;
+	font-size:90%;
+	margin: auto auto;
+
+	.file {
+		display:inline-block;
+		white-space: nowrap;
+		overflow-x: hidden;
+		width: ( @todoWidth * 0.3 );
+		text-align:right;
+		direction: rtl;
+	}
+	.line {
+		//display:inline-block;
+		color: #78C;
+		&:before {
+			content: "@";
+			font-weight: normal;
+		}
+	}
+	/*.text {
+		display:inline-block;
+		font-weight: lighter;
+		overfloat-x: hidden;
+	}*/
 }
 
 

@@ -19,17 +19,20 @@ class Application
 		    "request" => array(),
 			"title" => $name,
 			"starttime" => microtime(true),
-			"public" => '/cache/public'
+			"public" => '/cache/public',
+			"hostname" => $this->getServerName(),
 		);
 		$this->configs = array_merge( $configs, $this->configs );
 
 		$this->errors = array();
+
+		Module::Root($this);
 	}
 
 	/// Adds an error to the list and gathers additional data
 	public function addError( $category, $errorString ) {
 		//
-		// Get the stack trace... then find the function and file.
+		// TODO: Get the stack trace... then find the function and file.
 		//
 
 		$this->errors[] = array(
@@ -38,13 +41,48 @@ class Application
 		);
 	}
 
-	/// Returns the number of "to-dos" in the code (must be uppercase)
-	public function getTodos() {
-		// Start in the base directory and scan all directories searching for "TODO"
-		// and then number the results
-
-		return 0;
+	// returns true if the app is in debug mode
+	public function isDebug() {
+		return $this->configs['debug'] == true;
 	}
 
+	// Routes are in the form of:
+	//		"/route/url/(#id)" => view_path or routes_path
+	//
+	public function createRoutes( $routes ) {
+		/*foreach() {
+
+		}*/
+		$this->routes = $routes;
+	}
+
+	public function run () {
+		// Get teh current API call
+		$route = $this->getCurrentUri();
+
+		// Set all the important nonsense in here
+		//$view = Module::Root($this)->getViewByRoute( $route );
+		$view = Module::Root($this)->getViewByPath( "james.main" );
+
+		die($view->getHTML($this->configs));
+	}
+
+	public function getServerName() {
+		var_dump($_SERVER);
+		return $_SERVER['HTTP_HOST'];
+	}
+
+
+	// Get the current route
+	function getCurrentUri() {
+		$basepath = implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)) . '/';
+		$uri = substr($_SERVER['REQUEST_URI'], strlen($basepath));
+		if (strstr($uri, '?')) $uri = substr($uri, 0, strpos($uri, '?'));
+		$uri = '/' . trim($uri, '/');
+		return $uri;
+	}
+
+
 	private $errors;
+	private $routes;
 }
