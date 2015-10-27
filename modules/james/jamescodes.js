@@ -19,7 +19,7 @@ $(document).ready( function() {
     showTab('updates', function(){
         Posts.showAll();
     });
-a
+
     showTab('projects', function() {
         Posts.filterOr(['project']);
     });

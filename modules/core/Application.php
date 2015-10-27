@@ -68,7 +68,6 @@ class Application
 	}
 
 	public function getServerName() {
-		var_dump($_SERVER);
 		return $_SERVER['HTTP_HOST'];
 	}
 
