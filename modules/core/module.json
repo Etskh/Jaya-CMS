@@ -1,0 +1,6 @@
+{
+	"name": "core",
+	"views" : {
+		"404" : "views/404.php"
+	}
+}

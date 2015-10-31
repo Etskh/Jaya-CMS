@@ -1,7 +1,9 @@
 <?php
 
 
-/// This represents a grouping of functionality inside the app
+/**
+ *    This represents a grouping of functionality inside the app
+ */
 class Module {
 
 
@@ -23,6 +25,8 @@ class Module {
 
     public $views;
 
+
+    public $routes;
 
 
 
@@ -71,6 +75,8 @@ class Module {
 
         $this->views = array();
 
+        $this->routes = array();
+
 
         // Adding child modules
         //
@@ -95,6 +101,13 @@ class Module {
         //
         if( isset($configs['dependencies']) ) {
             $this->dependsOn = $configs['dependencies'];
+        }
+
+
+        // Adding routes
+        //
+        if( isset($configs['routes'])) {
+            $this->routes = $configs['routes'];
         }
 
 
@@ -364,5 +377,4 @@ class Module {
         //print("$depth: return null<br/>");
         return null;
     }
-
 }

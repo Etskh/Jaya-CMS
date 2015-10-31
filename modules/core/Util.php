@@ -1,6 +1,8 @@
 <?php
 
-
+/**
+ *	Functions for the whole App to use
+ */
 class Util
 {
 

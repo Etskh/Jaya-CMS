@@ -1,6 +1,9 @@
 <?php
 
-
+/**
+    This represents a single file that will be cached in the file-system (compiled, lessened
+    or whatever)
+*/
 class CachedFile
 {
     protected static $CACHE_FOLDER = 'cache';

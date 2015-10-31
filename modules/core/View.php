@@ -1,9 +1,9 @@
 <?php
 
 
-//
-// View object
-//
+/**
+ *  This is a file that takes a template and ends up as output
+ */
 class View extends CachedFile
 {
     /// The name of the view object
@@ -15,7 +15,7 @@ class View extends CachedFile
     /// A list of the cached scripts needed by this view
     public $cacehdScripts;
 
-    /// Constructor!
+    /** Constructor */
     public function View ($name, $path, $module ) {
         parent::__construct($path, false, $module );
 
@@ -25,7 +25,7 @@ class View extends CachedFile
     }
 
 
-    /// Returns the HTML to the view with the given configs
+    /** Returns the HTML to the view with the given configs */
     public function getHTML( $configs ) {
 
         $DEBUG = isset($configs['debug']) && $configs['debug'];
@@ -135,6 +135,21 @@ class View extends CachedFile
             $buffer .= $script->minify();
         }
         return $buffer;
+    }
+
+    /**
+     *  Sets the code for the file being returned
+     */
+    public function setCode( $code ) {
+        $newCode = ' '.$code;
+        switch($code) {
+        case 404:
+            $newCode.=' Not Found';
+            break;
+        default:
+            break;
+        }
+        header($_SERVER["SERVER_PROTOCOL"]. $newCode);
     }
 
 }

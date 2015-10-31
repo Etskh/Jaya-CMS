@@ -7,9 +7,8 @@ require_once("modules/core/Bootstrap.php");
 //
 $app = new Application('James Codes', array(
     "debug" => true,
+    "database" => "sqlite:./data/site.db",
 ));
-
-
 
 //
 // Make this load in JSON on debug, then generate the routes
@@ -17,18 +16,12 @@ $app = new Application('James Codes', array(
 //
 $app->createRoutes(array(
     "/" => "james.main",
-    "/posts" => "posts.routes",
+    //"/posts" => "posts.routes",
+    "/posts" => "posts.all",
+    "/posts/&postSlug" => "posts.view",
+    "/posts/#postID" => "posts.view",
 ));
 
 
 
 $app->run();
-
-//
-//$view = $moduleRoot->getViewByPath( $views['/'] );
-//$view = $moduleRoot->getViewByRoute( $route );
-
-//
-// Output
-//
-//die($view->getHTML($app->configs));

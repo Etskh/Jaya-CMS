@@ -19,7 +19,7 @@ if (!defined ("INC_PATH")) {
 
 date_default_timezone_set('America/Vancouver');
 
-
+require_once("Database.php");
 require_once("Application.php");
 require_once("Util.php");
 require_once("Module.php");
