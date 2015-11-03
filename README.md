@@ -17,6 +17,6 @@ If that doesn't work, no worries. `cd` into `modules/extern` and run this comman
 
 ## Run the tests
 
-I use PHPUnit to do testing, as it is the default for TravisCI environment. Jaya-CMS is also tested on PHP 4.8, 5.3, 5.4, 5.5 and 5.6.
+I use PHPUnit to do testing, as it is the default for TravisCI environment. Jaya-CMS is also tested on PHP 5.3, 5.4, 5.5 and 5.6.
 
 Testing can be manually run with `phpunit ./tests`
