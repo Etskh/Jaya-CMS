@@ -1,4 +1,5 @@
 # Jaya-CMS
+[![Build Status](https://travis-ci.org/Etskh/Jaya-CMS.svg?branch=master)](https://travis-ci.org/Etskh/Jaya-CMS)
 A file-based CMS written in PHP, with support for Markdown
 
 # Installing
