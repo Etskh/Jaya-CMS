@@ -15,11 +15,10 @@ $app = new Application('James Codes', array(
 // But for the not-debug, use PHP
 //
 $app->createRoutes(array(
-    "/" => "james.main",
-    //"/posts" => "posts.routes",
-    "/posts" => "posts.all",
-    "/posts/&postSlug" => "posts.view",
-    "/posts/#postID" => "posts.view",
+    '/' => 'james.main',
+    '/posts' => 'posts.all',
+    '/posts/{$postSlug}' => "posts.view",
+    '/posts/{#postID}' => "posts.view",
 ));
 
 

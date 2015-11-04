@@ -1,8 +1,8 @@
 <?php
 
 /**
-    This represents a single file that will be cached in the file-system (compiled, lessened
-    or whatever)
+ *  This represents a single file that will be cached in the file-system (compiled, lessened
+ *  or whatever)
 */
 class CachedFile
 {

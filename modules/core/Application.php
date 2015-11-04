@@ -15,8 +15,10 @@ class Application
 
 	/** Creates an application, needs a name and (at least) an empty array */
 	public function Application( $name, $configs ) {
+		$this->version = "0.1.0";
 		$this->name = $name;
 		$this->configs = array(
+			"version" => $this->version,
 		    "errors" => '',
 		    "scripts" => '',
 		    "stylesheets" => '',
@@ -26,18 +28,20 @@ class Application
 			"starttime" => microtime(true),
 			"public" => '/cache/public',
 			"hostname" => $this->getServerName(),
-			"page-404" => 'core.404'
+			"page-404" => 'core.404', // view file for 404 page - can be overwritten
+			"page-403" => 'core.403', // view file for 403 page - can be overwritten
 		);
 		$this->configs = array_merge( $configs, $this->configs );
 
 		$this->db = false;
-		if( ! isset($this->configs['database']) ) {
+		/*if( ! isset($this->configs['database']) ) {
 			// TODO: Create a file-based database
-			die("Not implemented");
+			$this->configs["database"] = "sqlite:./data/site.db";
+			$this->db = new Database($this->configs['database']);
 		}
 		else {
 			$this->db = new Database($this->configs['database']);
-		}
+		}*/
 
 		$this->errors = array();
 		$this->routes = array();
@@ -81,24 +85,28 @@ class Application
 	public function createRoutes( $routes ) {
 		// TODO: if it's debug mode, then check all routes point to reasonable modules
 
+		// if debug is disabled, then rely on urls.php
+		// if it doesn't exist, then create it.
+		$output = array();
+
+
 		foreach( $routes as $route => $destination ) {
 			// Turn the routes into regexes
 
-			// (?P<name>\w+)
-			// (?P<digit>\d+)
-
 			$patterns = array(
-				'/#(\w+)/',
-				'/&(\w+)/',
+				'/\{#(\w+)\}/',
+				'/\{\$(\w+)\}/',
 			);
 			$replacements = array(
 				'(?P<$\1>\d+)',
 				'(?P<$\1>\w+)',
 			);
 
+			$route = trim($route, '/');
 			$route = preg_replace($patterns, $replacements, $route );
 
-			var_dump($route);
+			$output[$route] = $destination;
+
 			//
 			//while( preg_match('/#(?P<identifier>[\w\-]+)/', $route, $matches) == 1 ) {
 			//	$matches
@@ -118,12 +126,16 @@ class Application
 			//if( $routeLoc !== false ) {
 			//	$modulePath = substr($destination, 0, $routeLoc );
 			//	$module = Module::Root($this)->getByFullPath($modulePath);
-				//
+			//
 			//}
 		}
-		die();
+		//
+		// Save the routes to urls.php
+		//
+		$export = sprintf("<?php\ndefine(\"CACHED_URLS\", %s);?>", var_export($output,true) );
+		file_put_contents("cache/urls.php", $export);
 
-		//$this->routes = $routes;
+		$this->routes = $output;
 	}
 
 	/**
@@ -134,9 +146,22 @@ class Application
 
 		// If the currentURL is '/', then JUST return the main
 		if( $url == '') {
-			$view = Module::Root($this)->getViewByPath( $this->routes['/'] );
+			$view = Module::Root($this)->getViewByPath( $this->routes[''] );
 			die($view->getHTML($this->configs));
 		}
+
+		foreach( $this->routes as $route => $destination ) {
+
+			$route = "/".str_replace("/", "\/", $route)."/";
+			if( preg_match($route, $url, $matches) === 1 ) {
+				var_dump($matches);
+				die("Matched!".$route);
+			}
+			//die( $route );
+		}
+		die("Ran");
+
+
 
 		// Get teh current API call
 		//$url = explode('/', $url);
@@ -170,7 +195,10 @@ class Application
 
 	/** Returns the name of the server that we're asking about to get here */
 	public function getServerName() {
-		return $_SERVER['HTTP_HOST'];
+		if( isset($_SERVER['HTTP_HOST'])) {
+			return $_SERVER['HTTP_HOST'];
+		}
+		return 'Unknown'; // probably testing
 	}
 
 
@@ -187,4 +215,6 @@ class Application
 	private $errors;
 	/** An array of routes that the application knows about */
 	private $routes;
+	/** Contains the version information for the build of Jaya-CMS */
+	private $version;
 }

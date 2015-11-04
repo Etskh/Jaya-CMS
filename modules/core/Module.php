@@ -38,7 +38,7 @@ class Module {
 
             if( $application === false ) {
                 ?><div style="color:#F00">We can't load in modules without an Application</div><?php
-                exit();
+                exit(1);
             }
             Module::LoadAllModules($application);
         }

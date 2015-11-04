@@ -2,13 +2,18 @@
 
 class ModuleTest extends PHPUnit_Framework_TestCase
 {
-	/*
+	/**
 	 * @test
 	 */
 	public function test_ModuleLoader () {
+		$app = new Application("Jaya-CMS Tests", array(
+			'debug' => true
+		));
 
-		//$module = new Module();
+		$root = Module::Root($app);
+		$core = $root->getByFullPath('core');
 
-		$this->assertEquals( 1, intval('1') );
+		$this->assertEquals( $core->name, "core" );
 	}
+
 }
