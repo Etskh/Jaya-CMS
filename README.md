@@ -1,11 +1,11 @@
 
 # Jaya-CMS
 
-A (mainly) file-based, git-oriented,
+A file-based, git-oriented, CMS written in PHP.
 
 [![Build Status](https://travis-ci.org/Etskh/Jaya-CMS.svg?branch=master)](https://travis-ci.org/Etskh/Jaya-CMS)
 
-A file-based CMS written in PHP, with support for Markdown. It was started for my own use as a personal blog, portfolio site - because it's strange to advertise your LAMP skills with a Wordpress blog. Since then, it's evolved into a general CMS with much inspiration from ExpressJS and Django, but as a low-latency PHP project. Easier to set up, and much more support for speed increases.
+It was started for my own use as a personal blog, portfolio site - because it's strange to advertise your LAMP skills with a Wordpress blog. Since then, it's evolved into a general CMS with much inspiration from ExpressJS and Django, but as a low-latency PHP project. Easier to set up, and much more support for speed increases.
 
 # Installing
 ## Clone this Project
@@ -28,4 +28,4 @@ I use PHPUnit to do testing, as it is the default for TravisCI environment. Jaya
 
 # Contact
 
- * Etksh - primary developer.
+ * Etskh - primary developer.
