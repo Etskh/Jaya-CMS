@@ -20,7 +20,9 @@ $(document).ready( function() {
         Posts.showAll();
     });
 
-    showTab('projects', function() {
+    $('#header-updates').click();
+
+    /*showTab('projects', function() {
         Posts.filterOr(['project']);
-    });
+    });*/
 });
