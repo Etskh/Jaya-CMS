@@ -5,7 +5,7 @@ require_once("modules/core/Bootstrap.php");
 //
 // Application
 //
-$app = new Application('James Codes', array(
+$app = new Application('James Codes Things', array(
     "debug" => true,
     "database" => "sqlite:./data/site.db",
 ));
@@ -17,8 +17,8 @@ $app = new Application('James Codes', array(
 $app->createRoutes(array(
     '/' => 'james.main',
     '/posts' => 'posts.all',
-    '/posts/{$postSlug}' => "posts.view",
-    '/posts/{#postID}' => "posts.view",
+    '/posts/{$postSlug}' => 'posts.view',
+    '/posts/{#postID}' => 'posts.view',
 ));
 
 

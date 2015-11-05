@@ -8,6 +8,12 @@ $headerLinks = array(
 	//"tags",
 );
 
+$socialLinks = array(
+	"Twitter" => 'https://twitter.com/DarthLoucks',
+	"GitHub" => 'https://github.com/etskh',
+	"Art" => 'https://etskh.wordpress.com',
+);
+
 ?><!DOCTYPE html>
 <html>
 	<head>
@@ -25,14 +31,19 @@ $headerLinks = array(
 	</head>
 	<body>
 		<div id="header">
-			<a href="#" id="brand">
-				<span>{{config.title}}</span>
-			</a>
-			<?php
-			foreach( $headerLinks as $link ) {
-				?><a class="link" id="header-<?=$link?>" href="#<?=$link?>"><?=$link?></a><?php
-			}
-			?>
+			<div class="content">
+				<a href="#" id="brand">
+					<span>{{config.title}}</span>
+				</a>
+				<?php
+				foreach( $headerLinks as $link ) {
+					?><a class="link" id="header-<?=$link?>" href="#<?=$link?>"><?=$link?></a><?php
+				}
+				?>
+				<div id="social">
+					<a id="social-" href="">link</a>
+				</div>
+			</div>
 		</div>
 
 		<div id="content">

@@ -26,7 +26,7 @@ body {
 	}
 
 	#brand {
-		text-transform: uppercase;
+		text-transform: capitalize;
 		padding-left:10px;
 	}
 
@@ -43,6 +43,10 @@ body {
 		&.active {
 			background-color: darken(@headerColour, 20%);
 		}
+	}
+
+	.social {
+		height:@headerHeight;
 	}
 }
 
@@ -85,14 +89,26 @@ body {
 	background-color:#FFF;
 }
 
+
+.content {
+	margin: auto auto;
+
+	@media screen and (min-width: 800px) {
+		width: 800px;
+	}
+	@media screen and (max-width: 800px) {
+		width: 100%;
+	}
+}
+
 #content {
 	margin: auto auto;
 
 	@media screen and (min-width: 800px) {
-		width: 640px;
+		width: 800px;
 	}
 	@media screen and (max-width: 800px) {
-		width: 80%;
+		width: 100%;
 	}
 }
 
