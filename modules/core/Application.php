@@ -15,7 +15,7 @@ class Application
 
 	/** Creates an application, needs a name and (at least) an empty array */
 	public function Application( $name, $configs ) {
-		$this->version = "0.1.0";
+		$this->version = "0.0.1";
 		$this->name = $name;
 		$this->configs = array(
 			"version" => $this->version,
@@ -23,6 +23,7 @@ class Application
 		    "scripts" => '',
 		    "stylesheets" => '',
 		    "source" => '',
+			"logging" => 'file',
 		    "request" => array(),
 			"title" => $name,
 			"starttime" => microtime(true),
@@ -42,6 +43,13 @@ class Application
 		else {
 			$this->db = new Database($this->configs['database']);
 		}*/
+		/*
+		TODO: Create logging, based on some criteria
+		if the "logging" value is "file", then make it "file:cache/log.html"
+		if the "logging" value is "stdout" then pretty print all logging - if it's a webserver, then use
+		the built-in way to log things
+		if the "logging" value is "db" then use the database to do logging
+		*/
 
 		$this->errors = array();
 		$this->routes = array();
