@@ -1,0 +1,42 @@
+#!/usr/bin/php
+<?php
+require_once("modules/core/Bootstrap.php");
+require_once("modules/core/Console.php");
+
+//
+// Application
+//
+$app = new Application('Jaya Command-line', array(
+    "debug" => true,
+	"logging" => "stdout",
+    "colourize" => true,
+));
+
+
+$cmds = new Console ( array(
+    "file" => __FILE__,
+	"commands" => array(
+        "--docs" => array(
+            "desc" => "Builds the documentation for all modules - at this moment, it throws away the output, but will still return 1 if any errors occur.",
+            "action" => 'rm -rf docs ; apigen --todo --exclude="*extern*" --source="{path}/modules/" --destination="{path}/docs" generate',
+        ),
+        "--test" => array(
+            "desc" => "Performs the unit tests for the site, then quits. The script will return 1 if any errors are found, so that it is interchangeable with the command itself.",
+            "action" => "phpunit --bootstrap ./modules/core/Bootstrap.php ./tests",
+        ),
+        "--version" => array(
+            "desc" => "Outputs the Jaya Application version in a parseable format then quits",
+            "action" => "{VERSION}",
+        ),
+		"--help" => array(
+			"desc" => "Display this help",
+			"action" => "{HELP}",
+		),
+	),
+	"options" => array(
+		// empty
+	),
+));
+
+
+$cmds->run( $argv, $app );
