@@ -25,6 +25,7 @@ class Module {
 
     public $views;
 
+    public $repo;
 
     public $routes;
 
@@ -67,6 +68,8 @@ class Module {
         $this->dependsOn = array();
 
         $this->app = $app;
+
+        $this->repo = null;
 
         $this->sources = array();
         $this->scripts = array();
@@ -124,6 +127,13 @@ class Module {
         }
         if( isset($configs['public'])) {
             $this->publicFiles = $configs['public'];
+        }
+
+
+        // Checking for the repo
+        //
+        if( isset($configs['repo'])) {
+            $this->repo = $configs['repo'];
         }
     }
 
@@ -270,6 +280,13 @@ class Module {
     }
 
 
+    /**
+     *  Update the repository if it has one
+     *  Returns True on success, False on failure
+     */
+    public function updateRepo () {
+
+    }
 
 
     /// The root module; use Module::Root($app) to get it.
