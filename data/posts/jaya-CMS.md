@@ -1,7 +1,7 @@
 
 ## Layers
 
-It's built on a custom file-based CMS written in only PHP. It uses the directory structure and filenames to determine the names of posts. For example, this text is stored in a file called `hello-world.md` - the filename is then transformed into CamelCase for the title of the post. The date is determined by the modified-time of the file.
+It's built on a custom file-based CMS written in only PHP. It uses the directory structure and filenames to determine the names of posts. For example, this text is stored in a file called `jaya-CMS.md` - the filename is then transformed into CamelCase for the title of the post. The date is determined by the modified-time of the file.
 
 ## Modules
 

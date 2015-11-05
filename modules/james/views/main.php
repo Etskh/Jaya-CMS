@@ -3,7 +3,7 @@
 
 $headerLinks = array(
 	"updates",
-	"projects",
+	//"projects",
 	//"about",
 	//"tags",
 );
@@ -20,8 +20,8 @@ $socialLinks = array(
 		<title>{{config.title}}</title>
 		<meta charset="utf8"/>
 		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
-		<meta name="description" content="">
-		<meta name="keywords" content="James Loucks">
+		<meta name="description" content="James Loucks - Fullstack LAMP developer">
+		<meta name="keywords" content="James Loucks Developer LAMP fullstack generalist">
 
 		<link rel="icon" href="modules/james/skull2.ico" />
 		<link rel="shortcut icon" href="modules/james/skull2.png" />

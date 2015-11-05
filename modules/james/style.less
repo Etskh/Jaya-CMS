@@ -1,6 +1,11 @@
+/*
+
+ Main site style
+
+*/
 
 @bgcolor: #FFFFFF;
-@headerColour: #FF9933;
+@headerColour: darken(#FF9933, 10%);
 @headerHeight: 40px;
 
 body {
@@ -38,10 +43,10 @@ body {
 		height:@headerHeight;
 
 		&:hover {
-			background-color: darken(@headerColour, 20%);
+			background-color: darken(@headerColour, 10%);
 		}
 		&.active {
-			background-color: darken(@headerColour, 20%);
+			background-color: desaturate(darken(@headerColour, 10%), 10%);
 		}
 	}
 
