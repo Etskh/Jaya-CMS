@@ -1,7 +1,6 @@
 #!/usr/bin/php
 <?php
 require_once("modules/core/Bootstrap.php");
-require_once("modules/core/Console.php");
 
 //
 // Application
