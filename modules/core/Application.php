@@ -140,7 +140,7 @@ class Application
 		//
 		// Save the routes to urls.php
 		//
-		$export = sprintf("<?php\ndefine(\"CACHED_URLS\", %s);?>", var_export($output,true) );
+		$export = sprintf("<?php\ndefine(\"CACHED_URLS\", %s);", var_export($output,true) );
 		file_put_contents("cache/urls.php", $export);
 
 		$this->routes = $output;
