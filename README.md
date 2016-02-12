@@ -1,5 +1,5 @@
 
-# Jaya-CMS
+# Jaya-CMS :dog2:
 
 A file-based, git-oriented, CMS written in PHP.
 
